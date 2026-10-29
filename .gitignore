@@ -1,2 +1,7 @@
+# Python cache files
+__pycache__/
+# VS Code settings
+.vscode/
+# macOS system files
 .DS_Store
 **/.DS_Store
