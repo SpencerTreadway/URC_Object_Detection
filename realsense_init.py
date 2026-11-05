@@ -57,30 +57,30 @@ def camera_matrix_from_intrinsics(intrinsics) -> np.ndarray:
         dtype=np.float32,
     )
 
-
 def create_color_depth_alignment():
     '''Create an alignment object that maps depth pixels to the color frame.'''
 
     return rs.align(rs.stream.color)
 
-
 def wait_for_color_and_depth_frames(pipeline, alignment=None, timeout_ms=None):
     '''Return color and depth frames, optionally aligned to the color frame.'''
 
+    # wait for frames from the RealSense pipeline, with an optional timeout
     if timeout_ms is None:
         frames = pipeline.wait_for_frames()
+    # if a timeout is specified, wait for frames with the given timeout
     else:
         frames = pipeline.wait_for_frames(timeout_ms)
+    # if an alignment object is provided, align the frames to the color frame
     if alignment is not None:
         frames = alignment.process(frames)
     return frames.get_color_frame(), frames.get_depth_frame()
 
-
 def get_depth_distance(depth_frame, x: int, y: int) -> float:
     '''Return the distance in meters at one depth-frame pixel.'''
 
+    # get the distance in meters at the specified pixel in the depth frame
     return float(depth_frame.get_distance(x, y))
-
 
 def get_bounding_box_distance(
     depth_frame,
@@ -88,11 +88,16 @@ def get_bounding_box_distance(
 ) -> float:
     '''Return the median distance in meters from the valid pixels in a bounding box.'''
 
+    # unpack the bounding box coordinates into left, top, right, and bottom
     left, top, right, bottom = bounding_box
+    # check if the bounding box is valid (non-empty)
     distances = []
+    # iterate over each pixel in the bounding box and collect valid depth distances
     for y in range(top, bottom):
         for x in range(left, right):
+            # get the distance at the current pixel in the depth frame
             distance = get_depth_distance(depth_frame, x, y)
+            # if the distance is valid (greater than 0), add it to the list of distances
             if distance > 0:
                 distances.append(distance)
     if not distances:
