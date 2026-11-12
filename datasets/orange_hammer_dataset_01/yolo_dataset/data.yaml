@@ -1,0 +1,4 @@
+path: "/Users/cocytus/Productivity/University Rover Competition/datasets/orange_hammer_dataset_01/yolo_dataset"
+train: train/images
+val: val/images
+names: ["Orange Hammer"]
