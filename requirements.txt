@@ -1,0 +1,11 @@
+# Camera capture, image processing, and calibration
+numpy>=1.24
+opencv-python>=4.8.0
+
+# YOLO training and live inference
+ultralytics>=8.3.0
+
+# OWLv2 zero-shot pre-labeling
+torch>=2.1.0
+transformers>=4.40.0
+Pillow>=10.0.0
